@@ -22,6 +22,36 @@ git config --global user.email "your.email@example.com"
 git clone https://github.com/Sonaticspink/DataBait
 ```
 
+# How to run and start docker (first time)
+
+1.start docker
+
+2.cd into the directory (DBProject)
+
+3.run 
+```
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail composer require laravel/breeze --dev
+./vendor/bin/sail npm install
+./vendor/bin/sail bun install
+```
+
+# How to run the app
+1.start docker
+
+2.cd into the directory (DBProject)
+
+3.run
+```
+./vendor/bin/sail up -d
+```
+4.after finish and want to stop the docker image
+```
+./vendor/bin/sail down
+```
+
+
 # How to open code in VScode
 1.copy the path in the Ubuntu
 
@@ -31,4 +61,6 @@ git clone https://github.com/Sonaticspink/DataBait
 3.paste path that you copy
 
 4.click open folder button
+
+
 
