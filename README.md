@@ -6,6 +6,8 @@
 ```
 sudo apt update
 sudo apt install git
+sudo apt install composer
+sudo apt install php8.3-cli
 ```
 
 
