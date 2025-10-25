@@ -32,6 +32,7 @@ git clone https://github.com/Sonaticspink/DataBait
 
 3.run 
 ```
+docker run --rm -v $(pwd):/app composer install
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate
 ./vendor/bin/sail composer require laravel/breeze --dev
