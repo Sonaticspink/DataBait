@@ -42,7 +42,7 @@ Route::get('/wishlist', [WishlistController::class, 'index'])
     ->name('wishlist');
 
 // Library page
-Route::get('/library', [LibraryController::class, 'index'])
+Route::get('/library/{product_id?}', [LibraryController::class, 'index'])
     ->middleware('auth')
     ->name('library');
 
