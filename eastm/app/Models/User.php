@@ -21,4 +21,14 @@ class User extends Authenticatable
     ];
 
     protected $hidden = ['password'];
+
+    public function wishlistItems()
+    {
+        return $this->hasMany(\App\Models\Wishlist::class, 'user_id', 'user_id');
+    }
+
+    public function libraryEntries()
+    {
+        return $this->hasMany(\App\Models\LibraryEntry::class, 'owner_id', 'user_id');
+    }
 }

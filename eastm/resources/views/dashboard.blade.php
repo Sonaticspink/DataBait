@@ -25,9 +25,9 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a href="/dashboard" class="nav-link active">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Store</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Library</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Wishlist</a></li>
+                <li class="nav-item"><a href="/store" class="nav-link">Store</a></li>
+                <li class="nav-item"><a href="/library" class="nav-link">Library</a></li>
+                <li class="nav-item"><a href="/wishlist" class="nav-link">Wishlist</a></li>
             </ul>
 
             <!-- User Info + Logout -->
