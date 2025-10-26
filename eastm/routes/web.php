@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\LibraryController;
 
 
 Route::get('/', function () {
@@ -27,3 +30,32 @@ Route::get('/dashboard', function () {
     return view('dashboard'); // create a simple view for testing
 })->middleware('auth');
 require __DIR__.'/settings.php';
+
+// Store page (browse games)
+Route::get('/store', [StoreController::class, 'index'])
+    ->middleware('auth')
+    ->name('store');
+
+// Wishlist page
+Route::get('/wishlist', [WishlistController::class, 'index'])
+    ->middleware('auth')
+    ->name('wishlist');
+
+// Library page
+Route::get('/library', [LibraryController::class, 'index'])
+    ->middleware('auth')
+    ->name('library');
+
+// Wishlist actions
+Route::post('/wishlist/add/{product_id}', [WishlistController::class, 'add'])
+    ->middleware('auth')
+    ->name('wishlist.add');
+
+Route::post('/wishlist/remove/{product_id}', [WishlistController::class, 'remove'])
+    ->middleware('auth')
+    ->name('wishlist.remove');
+
+// Library "claim / add"
+Route::post('/library/add/{product_id}', [LibraryController::class, 'add'])
+    ->middleware('auth')
+    ->name('library.add');
