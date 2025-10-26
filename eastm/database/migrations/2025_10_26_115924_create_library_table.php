@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->unique()->constrained('users', 'user_id');
             $table->foreignId('game_id')->constrained('products', 'product_id');
             $table->string('game_icon')->nullable(); // image type → store as string (path)
+            $table->unique(['owner_id', 'game_id']);
         });
 
     }
