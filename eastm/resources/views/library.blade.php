@@ -7,13 +7,13 @@
 
     <style>
         body {
-            background-color: #1b1f23; /* deep dark */
+            background-color: #1b1f23;
             color: #d7d7d7;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
         .library-shell {
-            height: calc(100vh - 64px); /* minus navbar height */
+            height: calc(100vh - 64px);
             display: flex;
             gap: 0;
             color: #d7d7d7;
@@ -22,6 +22,7 @@
         /* LEFT SIDEBAR */
         .library-sidebar {
             width: 260px;
+            background: #1f242b;
             background: linear-gradient(#1f242b, #1a1d22);
             border-right: 1px solid rgba(255,255,255,0.05);
             display: flex;
@@ -48,15 +49,19 @@
             align-items: center;
             gap: .75rem;
             padding: .6rem .9rem;
-            cursor: pointer;
             text-decoration: none;
             color: #d7d7d7;
             font-size: .9rem;
+            border-left: 3px solid transparent;
         }
 
-        .game-row:hover,
-        .game-row.active {
+        .game-row:hover {
             background: radial-gradient(circle at 0% 0%, rgba(36,107,255,0.18) 0%, rgba(20,24,30,0.5) 60%);
+        }
+
+        .game-row.active {
+            background: radial-gradient(circle at 0% 0%, rgba(36,107,255,0.28) 0%, rgba(20,24,30,0.6) 60%);
+            border-left: 3px solid #2d6dff;
         }
 
         .game-thumb {
@@ -82,6 +87,7 @@
             color: #fff;
             font-weight: 500;
             font-size: .9rem;
+            line-height: 1.2;
         }
 
         .game-genre {
@@ -102,13 +108,13 @@
             position: relative;
             background: radial-gradient(circle at 20% 20%, rgba(40,90,200,0.4) 0%, rgba(0,0,0,0) 70%);
             border-bottom: 1px solid rgba(255,255,255,0.07);
-            padding: 1.5rem;
+            padding: 1rem 1rem 1.25rem;
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         .hero-cover {
-            width: 300px;
+            width: 220px;
             max-width: 40%;
             border-radius: 6px;
             background-color: #1e242c;
@@ -119,7 +125,7 @@
 
         .hero-cover img {
             width: 100%;
-            height: 170px;
+            height: 120px;
             object-fit: cover;
             display: block;
         }
@@ -129,22 +135,30 @@
             display: flex;
             flex-direction: column;
             min-width: 0;
+            color: #d7d7d7;
         }
 
         .hero-title {
             color: #fff;
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 600;
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
         .hero-genres {
             color: #8b949e;
             font-size: .8rem;
+            line-height: 1.2;
+        }
+
+        .hero-meta {
+            font-size: .75rem;
+            color: #8b949e;
+            line-height: 1.4;
         }
 
         .hero-actions {
-            margin-top: auto;
+            margin-top: .75rem;
             display: flex;
             flex-wrap: wrap;
             gap: .75rem;
@@ -155,70 +169,93 @@
             border: 0;
             color: #fff;
             font-weight: 600;
-            padding: .6rem 1rem;
+            padding: .5rem .9rem;
             border-radius: .3rem;
             text-transform: uppercase;
             font-size: .8rem;
             letter-spacing: .03em;
-            min-width: 120px;
+            min-width: 100px;
         }
 
         .btn-play-steam:disabled {
             opacity: .5;
         }
 
-        .small-info {
-            font-size: .75rem;
-            color: #8b949e;
+        .btn-outline-steam {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-size: .8rem;
+            padding: .5rem .9rem;
+            border-radius: .3rem;
         }
 
-        /* LOWER PANEL: DETAILS / ACTIVITY */
-        .details-area {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            display: grid;
-            grid-template-columns: minmax(0,1fr) 320px;
-            gap: 1.5rem;
-            overflow-y: auto;
+        /* LOWER DETAILS SECTION */
+        .details-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 1rem;
+            gap: 1rem;
         }
 
-        .panel-box {
+        .panel-about {
             background-color: #1a1f27;
             border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 6px;
-            padding: 1rem 1rem 1.25rem;
+            border-radius: 4px;
+            flex: 1 1 600px;
+            min-height: 300px;
+            color: #b6bcc7;
+            font-size: .85rem;
         }
 
-        .panel-title {
-            color: #fff;
+        .panel-info {
+            background-color: #1a1f27;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 4px;
+            flex: 0 0 280px;
+            max-width: 280px;
+            color: #b6bcc7;
             font-size: .8rem;
+        }
+
+        .panel-head {
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            padding: .75rem .9rem;
+            font-size: .7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: .05em;
-            margin-bottom: .75rem;
+            color: #fff;
         }
 
-        .panel-text {
-            font-size: .8rem;
-            color: #b6bcc7;
+        .panel-body {
+            padding: .9rem;
             line-height: 1.4;
-            white-space: pre-line;
         }
 
-        .panel-subrow {
+        .panel-row {
             display: flex;
             justify-content: space-between;
             font-size: .75rem;
             color: #8b949e;
-            padding: .4rem 0;
+            padding: .5rem .9rem;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
-        .panel-subrow:last-child {
+        .panel-row:last-child {
             border-bottom: 0;
         }
 
-        /* mini scrollbars for dark mode to feel "PC app"-ish */
+        .panel-row span.value {
+            color: #fff;
+        }
+
+        .panel-row span.value.ok {
+            color: #4caf50;
+            font-weight: 500;
+        }
+
+        /* Scrollbars */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -230,21 +267,31 @@
             background: #11151a;
         }
 
-        @media (max-width: 992px) {
-            .details-area {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
             .library-shell {
                 flex-direction: column;
+                height: auto;
             }
+
             .library-sidebar {
                 width: 100%;
                 max-height: 200px;
                 border-right: 0;
                 border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+
+            .hero-area {
+                flex-direction: column;
+            }
+
+            .hero-cover {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .panel-info {
+                flex: 1 1 auto;
+                max-width: 100%;
             }
         }
     </style>
@@ -252,12 +299,6 @@
 <body>
 
 @include('partials.navbar', ['active' => 'library'])
-
-@php
-    // pick first owned game as the "selected" one for hero panel
-    $selected = $games->first();
-    $selectedProduct = $selected?->product;
-@endphp
 
 <div class="library-shell">
 
@@ -269,37 +310,38 @@
 
         <div class="game-list">
             @forelse ($games as $entry)
-                @php
-                    $p = $entry->product;
-                    $isActive = $selected && $p && $p->product_id === $selectedProduct?->product_id;
-                @endphp
+            @php
+            $p = $entry->product;
+            $isActive = $selectedProduct && $p && $p->product_id === $selectedProduct->product_id;
+            @endphp
 
-                <a class="game-row {{ $isActive ? 'active' : '' }}">
-                    {{-- thumb --}}
-                    @if ($p && $p->cover_image)
-                        <img src="{{ asset($p->cover_image) }}"
-                             class="game-thumb"
-                             alt="cover">
-                    @else
-                        <div class="game-thumb">
-                            <span class="text-muted">No<br>Img</span>
-                        </div>
-                    @endif
-
-                    {{-- title / genre --}}
-                    <div class="game-meta">
-                        <div class="game-title">
-                            {{ $p->title ?? 'Unknown Game' }}
-                        </div>
-                        <div class="game-genre">
-                            {{ $p->product_genres ?? '—' }}
-                        </div>
-                    </div>
-                </a>
-            @empty
-                <div class="text-center text-muted p-3 small">
-                    You don’t own any games yet.
+            <a href="{{ route('library', ['product_id' => $p->product_id]) }}"
+               class="game-row {{ $isActive ? 'active' : '' }}">
+                {{-- thumb --}}
+                @if ($p && $p->cover_image)
+                <img src="{{ asset($p->cover_image) }}"
+                     class="game-thumb"
+                     alt="cover">
+                @else
+                <div class="game-thumb">
+                    <span class="text-muted">No<br>Img</span>
                 </div>
+                @endif
+
+                {{-- title / genres --}}
+                <div class="game-meta">
+                    <div class="game-title">
+                        {{ $p->title ?? 'Unknown Game' }}
+                    </div>
+                    <div class="game-genre">
+                        {{ $p->product_genres ?? '—' }}
+                    </div>
+                </div>
+            </a>
+            @empty
+            <div class="text-center text-muted p-3 small">
+                You don’t own any games yet.
+            </div>
             @endforelse
         </div>
     </aside>
@@ -309,19 +351,19 @@
 
         {{-- HERO SECTION --}}
         <section class="hero-area">
-            {{-- big cover --}}
+            {{-- cover art --}}
             <div class="hero-cover">
                 @if ($selectedProduct && $selectedProduct->cover_image)
-                    <img src="{{ asset($selectedProduct->cover_image) }}" alt="cover">
+                <img src="{{ asset($selectedProduct->cover_image) }}" alt="cover">
                 @else
-                    <div class="d-flex align-items-center justify-content-center text-muted"
-                         style="width:100%;height:170px;font-size:.8rem;background:#0e1116;">
-                        No cover
-                    </div>
+                <div class="d-flex align-items-center justify-content-center text-muted"
+                     style="width:100%;height:120px;font-size:.8rem;background:#0e1116;">
+                    No cover
+                </div>
                 @endif
             </div>
 
-            {{-- info + play --}}
+            {{-- text info --}}
             <div class="hero-info">
                 <div class="hero-title">
                     {{ $selectedProduct->title ?? 'Select a game' }}
@@ -331,16 +373,19 @@
                     {{ $selectedProduct->product_genres ?? '' }}
                 </div>
 
-                <div class="small-info mb-3">
+                <div class="hero-meta mb-2">
                     @if ($selectedProduct)
-                        Developer:
-                        <span class="text-light">{{ $selectedProduct->developer ?? '—' }}</span><br>
-                        Publisher:
-                        <span class="text-light">{{ $selectedProduct->publisher ?? '—' }}</span><br>
-                        Release:
+                    <div>Developer:
+                        <span class="text-light">{{ $selectedProduct->developer ?? '—' }}</span>
+                    </div>
+                    <div>Publisher:
+                        <span class="text-light">{{ $selectedProduct->publisher ?? '—' }}</span>
+                    </div>
+                    <div>Release:
                         <span class="text-light">{{ $selectedProduct->release_date ?? '—' }}</span>
+                    </div>
                     @else
-                        No game selected.
+                    No game selected.
                     @endif
                 </div>
 
@@ -350,8 +395,7 @@
                         ▶ PLAY
                     </button>
 
-                    <button class="btn btn-outline-light btn-sm"
-                            style="border-color:rgba(255,255,255,0.3);color:#fff;"
+                    <button class="btn btn-outline-steam"
                             @if(!$selectedProduct) disabled @endif>
                         View Details
                     </button>
@@ -359,32 +403,33 @@
             </div>
         </section>
 
-        {{-- LOWER DETAILS / RIGHT SIDEBAR --}}
-        <section class="details-area">
-            {{-- left column: about game --}}
-            <div class="panel-box">
-                <div class="panel-title">About this game</div>
-                <div class="panel-text">
-@if ($selectedProduct)
-{{ $selectedProduct->description ?? 'No description provided.' }}
-@else
-Select a game from the left sidebar to see details here.
-@endif
+        {{-- DETAILS SECTION --}}
+        <section class="details-wrap">
+
+            {{-- ABOUT THIS GAME --}}
+            <div class="panel-about">
+                <div class="panel-head">ABOUT THIS GAME</div>
+                <div class="panel-body">
+                    @if ($selectedProduct)
+                    {{ $selectedProduct->description ?? 'No description provided.' }}
+                    @else
+                    Select a game on the left to view its details.
+                    @endif
                 </div>
             </div>
 
-            {{-- right column: game info / stats --}}
-            <div class="panel-box">
-                <div class="panel-title">Game info</div>
+            {{-- GAME INFO SIDEBAR --}}
+            <div class="panel-info">
+                <div class="panel-head">GAME INFO</div>
 
-                <div class="panel-subrow">
+                <div class="panel-row">
                     <span>Genres</span>
-                    <span class="text-light">{{ $selectedProduct->product_genres ?? '—' }}</span>
+                    <span class="value">{{ $selectedProduct->product_genres ?? '—' }}</span>
                 </div>
 
-                <div class="panel-subrow">
+                <div class="panel-row">
                     <span>Price</span>
-                    <span class="text-light">
+                    <span class="value">
                         @if ($selectedProduct && isset($selectedProduct->price))
                             ${{ number_format($selectedProduct->price, 2) }}
                         @else
@@ -393,20 +438,19 @@ Select a game from the left sidebar to see details here.
                     </span>
                 </div>
 
-                <div class="panel-subrow">
+                <div class="panel-row">
                     <span>Owned by</span>
-                    <span class="text-light">{{ Auth::user()->username }}</span>
+                    <span class="value">{{ Auth::user()->username }}</span>
                 </div>
 
-                <div class="panel-subrow">
+                <div class="panel-row">
                     <span>Status</span>
-                    <span class="text-success fw-semibold">Installed</span>
-                    {{-- In future you can flip this to "Not Installed" based on your data --}}
+                    <span class="value ok">Installed</span>
                 </div>
 
-                <div class="panel-subrow">
+                <div class="panel-row">
                     <span>Play time</span>
-                    <span class="text-light">0.0 hrs</span>
+                    <span class="value">0.0 hrs</span>
                 </div>
             </div>
         </section>
