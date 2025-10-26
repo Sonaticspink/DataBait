@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\LibraryEntry::class, 'owner_id', 'user_id');
     }
+
+    public function library()
+    {
+    return $this->hasMany(LibraryEntry::class, 'owner_id', 'user_id');
+    }
 }

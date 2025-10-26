@@ -52,4 +52,6 @@ class WishlistController extends Controller
 
         return redirect()->back();
     }
+
+    
 }
