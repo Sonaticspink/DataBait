@@ -13,9 +13,21 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id('cart_id');
-            $table->foreignId('user_id')->unique()->constrained('users', 'user_id');
-            $table->timestamps();
-        });     
+
+            $table->foreignId('user_id')
+                ->constrained('users', 'user_id')
+                ->onDelete('cascade');
+
+            // ✅ add this column — it's missing in your current table
+            $table->foreignId('product_id')
+                ->constrained('products', 'product_id')
+                ->onDelete('cascade');
+
+            $table->timestamp('added_at')->useCurrent();
+
+            // prevent duplicates per user + product
+            $table->unique(['user_id', 'product_id']);
+        });
 
     }
 

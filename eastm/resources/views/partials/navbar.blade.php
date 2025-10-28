@@ -12,10 +12,26 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a href="/dashboard" class="nav-link {{ ($active ?? '') === 'home' ? 'active' : '' }}">Home</a></li>
-                <li class="nav-item"><a href="/store" class="nav-link {{ ($active ?? '') === 'store' ? 'active' : '' }}">Store</a></li>
+                <li class="nav-item"><a href="/" class="nav-link {{ ($active ?? '') === 'store' ? 'active' : '' }}">Store</a></li>
                 <li class="nav-item"><a href="/library" class="nav-link {{ ($active ?? '') === 'library' ? 'active' : '' }}">Library</a></li>
                 <li class="nav-item"><a href="/wishlist" class="nav-link {{ ($active ?? '') === 'wishlist' ? 'active' : '' }}">Wishlist</a></li>
             </ul>
+
+            {{-- 🛒 CART BUTTON --}}
+            <a href="{{ route('cart') }}"
+               class="btn btn-outline-light d-flex align-items-center gap-2 px-3 py-1 rounded-pill shadow-sm position-relative"
+               style="border-color:#66c0f4; color:#66c0f4;">
+
+                <i class="bi bi-cart-fill"></i>
+                <span>Cart</span>
+
+                @if(isset($cartCount) && $cartCount > 0)
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                      style="background-color:#66c0f4; color:#fff; font-size:.65rem;">
+            {{ $cartCount }}
+        </span>
+                @endif
+            </a>
 
             <div class="d-flex align-items-center">
                 <span class="me-3">👤 {{ Auth::user()->username }}</span>

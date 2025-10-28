@@ -64,9 +64,23 @@
                     <p class="fw-bold mt-auto mb-2">${{ number_format($product->price, 2) }}</p>
 
                     <div class="d-flex flex-wrap gap-2">
-                        {{-- Add to Wishlist --}}
+
+                        {{-- If user already owns it, show "Owned" and disable purchase --}}
+                        @if (in_array($product->product_id, $ownedProductIds))
+                        <span class="badge bg-success align-self-center">Owned</span>
+                        @else
+                        {{-- Add to Cart button --}}
+                        <form method="POST" action="{{ route('cart.add', $product->product_id) }}">
+                            @csrf
+                            <button class="btn btn-primary btn-sm" type="submit">
+                                Add to Cart
+                            </button>
+                        </form>
+                        @endif
+
+                        {{-- Wishlist logic --}}
                         @if (in_array($product->product_id, $wishlistProductIds))
-                        <span class="badge bg-info text-dark">In Wishlist</span>
+                        <span class="badge bg-info text-dark align-self-center">In Wishlist</span>
                         @else
                         <form method="POST" action="{{ route('wishlist.add', $product->product_id) }}">
                             @csrf
@@ -76,17 +90,6 @@
                         </form>
                         @endif
 
-                        {{-- Add to Library --}}
-                        @if (in_array($product->product_id, $ownedProductIds))
-                        <span class="badge bg-success">Owned</span>
-                        @else
-                        <form method="POST" action="{{ route('library.add', $product->product_id) }}">
-                            @csrf
-                            <button class="btn btn-light btn-sm text-dark" type="submit">
-                                Add to Library
-                            </button>
-                        </form>
-                        @endif
                     </div>
 
                 </div>

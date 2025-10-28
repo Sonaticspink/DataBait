@@ -9,7 +9,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\LibraryController;
-
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -67,4 +69,30 @@ Route::post('/library/add/{product_id}', [LibraryController::class, 'add'])
     ->middleware('auth')
     ->name('library.add');
 
+// cart page
+Route::get('/cart', [CartController::class, 'index'])
+    ->middleware('auth')
+    ->name('cart');
 
+// add item to cart
+Route::post('/cart/add/{product_id}', [CartController::class, 'add'])
+    ->middleware('auth')
+    ->name('cart.add');
+
+// remove item from cart
+Route::post('/cart/remove/{product_id}', [CartController::class, 'remove'])
+    ->middleware('auth')
+    ->name('cart.remove');
+
+// checkout / purchase
+Route::post('/cart/checkout', [CartController::class, 'checkout'])
+    ->middleware('auth')
+    ->name('cart.checkout');
+
+// home
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// product
+Route::get('/game/{id}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
