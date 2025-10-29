@@ -12,87 +12,20 @@ use App\Models\LibraryEntry;
 use App\Models\Wishlist;
 use App\Models\Product;
 
-class CartController extends Controller
+class CheckoutController extends Controller
 {
-    // GET /cart
+    // GET /checkout
     public function index()
     {
-        $user = Auth::user();
-
-        $cartItems = Cart::where('user_id', $user->user_id)
-            ->with('product')
-            ->get();
-
-        $total = $cartItems->sum(function ($row) {
-            return $row->product?->price ?? 0;
-        });
-
-        return view('cart', [
-            'cartItems' => $cartItems,
-            'total' => $total,
-        ]);
+        return view('checkout');
     }
 
-    // POST /cart/add/{product_id}
-    public function add($product_id)
-    {
-        $userId = Auth::id();
-
-        // 1. Already owned?
-        $alreadyOwned = DB::table('library')
-            ->where('owner_id', $userId)
-            ->where('game_id', $product_id)
-            ->exists();
-
-        if ($alreadyOwned) {
-            // also clean from wishlist just in case
-            Wishlist::where('user_id', $userId)
-                ->where('product_id', $product_id)
-                ->delete();
-
-            return back()->with('owned', true);
-        }
-
-        // 2. Already in cart?
-        $alreadyInCart = Cart::where('user_id', $userId)
-            ->where('product_id', $product_id)
-            ->exists();
-
-        if (!$alreadyInCart) {
-            Cart::create([
-                'user_id'    => $userId,
-                'product_id' => $product_id,
-                'added_at'   => now(),
-            ]);
-        }
-        /*
-        // 3. Remove from wishlist
-        Wishlist::where('user_id', $userId)
-            ->where('product_id', $product_id)
-            ->delete();
-        */
-        return back()->with('addedToCart', true);
-    }
-
-    // POST /cart/remove/{product_id}
-    public function remove($product_id)
-    {
-        $user = Auth::user();
-
-        Cart::where('user_id', $user->user_id)
-            ->where('product_id', $product_id)
-            ->delete();
-
-        return redirect()->route('cart');
-    }
-
-    // POST /cart/checkout
-    public function checkout()
+    // POST /checkout/confirm
+    public function confirm()
     {
         $user = Auth::user();
 
         return DB::transaction(function () use ($user) {
-            /*
             // 1. get items in cart
             $cartItems = Cart::where('user_id', $user->user_id)
                 ->with('product')
@@ -145,8 +78,7 @@ class CartController extends Controller
             Cart::where('user_id', $user->user_id)->delete();
 
             // 6. send them to library view
-            */
-            return redirect()->route('checkout');
+            return redirect()->route('library');
             
         });
     }

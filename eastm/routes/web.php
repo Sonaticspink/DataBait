@@ -12,6 +12,7 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -55,6 +56,7 @@ Route::get('/library/{product_id?}', [LibraryController::class, 'index'])
     ->middleware('auth')
     ->name('library');
 
+
 // Wishlist actions
 Route::post('/wishlist/add/{product_id}', [WishlistController::class, 'add'])
     ->middleware('auth')
@@ -85,7 +87,7 @@ Route::post('/cart/remove/{product_id}', [CartController::class, 'remove'])
     ->name('cart.remove');
 
 // checkout / purchase
-Route::post('/cart/checkout', [CartController::class, 'checkout'])
+Route::post('/checkout', [CartController::class, 'checkout'])
     ->middleware('auth')
     ->name('cart.checkout');
 
@@ -96,3 +98,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/game/{id}', [ProductController::class, 'show'])->name('product.show');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Checkout page
+Route::get('/checkout', [CheckoutController::class, 'index'])
+    ->middleware('auth')
+    ->name('checkout');
+//Confirm checkout
+Route::post('/checkout/confirm', [CheckoutController::class, 'confirm'])
+    ->middleware('auth')
+    ->name('checkout.confirm');
