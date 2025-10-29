@@ -98,7 +98,7 @@
                 <li class="nav-item"><a href="/" class="nav-link {{ request()->is('store') ? 'active' : '' }}">STORE</a></li>
                 <li class="nav-item"><a href="/library" class="nav-link {{ request()->is('library') ? 'active' : '' }}">LIBRARY</a></li>
                 <li class="nav-item"><a href="/wishlist" class="nav-link {{ request()->is('wishlist') ? 'active' : '' }}">WISHLIST</a></li>
-                <li class="nav-item"><a href="/dashboard" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">{{ Auth::user()->username }}</a></li>
+                <li class="nav-item"><a href="/dashboard" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">{{ Auth::check() ? Auth::user()->username : 'Guest' }}</a></li>
             </ul>
 
             <div class="d-flex align-items-center gap-3">
@@ -121,14 +121,20 @@
 
                 {{-- 👤 USER BOX --}}
                 <div class="user-box d-flex align-items-center p-1 px-2 rounded">
-                    <img src="{{ Auth::user()->profile_picture ? asset(Auth::user()->profile_picture) : asset('img/Meat.png') }}"
+                    <img src="{{asset('img/Meat.png') }}"
                          alt="Profile"
                          class="rounded me-2 user-avatar">
-                    <span class="me-3 fw-semibold">{{ Auth::user()->username }}</span>
+                    <span class="me-3 fw-semibold">{{ Auth::check() ? Auth::user()->username : 'Guest' }}</span>
+                    @if(Auth::check())
+                    {{-- Logged in: show logout form --}}
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-logout">Logout</button>
                     </form>
+                    @else
+                    {{-- Not logged in: show login link --}}
+                    <a href="{{ url('/login') }}" class="btn btn-sm btn-logout">Login</a>
+                    @endif
                 </div>
             </div>
         </div>

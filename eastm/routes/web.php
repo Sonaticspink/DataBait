@@ -107,3 +107,52 @@ Route::get('/checkout', [CheckoutController::class, 'index'])
 Route::post('/checkout/confirm', [CheckoutController::class, 'confirm'])
     ->middleware('auth')
     ->name('checkout.confirm');
+
+Route::get('/loginneed', function () {
+    if (Auth::check()) {
+        return redirect()->route('home');
+    }
+
+    return response(
+        '<div style="
+            background:#0f1318;
+            min-height:100vh;
+            color:#fff;
+            font-family:Segoe UI,Arial,sans-serif;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        ">
+            <div style="
+                background:#1a1f27;
+                border:1px solid rgba(255,255,255,0.1);
+                border-radius:8px;
+                padding:2rem 2.5rem;
+                text-align:center;
+                max-width:320px;
+                box-shadow:0 20px 60px rgba(0,0,0,.8);
+            ">
+                <div style="color:#66c0f4;font-size:1.1rem;font-weight:600;margin-bottom:.5rem;">
+                    Login Required
+                </div>
+                <div style="color:#bbb;font-size:.9rem;line-height:1.4;margin-bottom:1rem;">
+                    You must sign in to access Cart, Wishlist, or Library.
+                </div>
+                <a href="/login" style="
+                    display:inline-block;
+                    background:linear-gradient(#3cb85c,#2e8b46);
+                    color:#fff;
+                    font-weight:600;
+                    text-decoration:none;
+                    padding:.6rem 1rem;
+                    border-radius:.4rem;
+                    font-size:.8rem;
+                    letter-spacing:.03em;
+                ">Go to Login Page</a>
+            </div>
+        </div>',
+        200,
+        ['Content-Type' => 'text/html']
+    );
+})->name('login');
+
