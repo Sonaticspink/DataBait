@@ -1,4 +1,5 @@
-Set Up Guide
+
+Set Up Guide (Linux)
 1.Open Linux Ubuntu
 
 2.update linux and install git with command
@@ -8,6 +9,7 @@ sudo apt install git
 sudo apt install composer
 sudo apt install php8.3-cli
 
+Herd
 ```
 cd eastm
 composer install
